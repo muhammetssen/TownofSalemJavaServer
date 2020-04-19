@@ -16,7 +16,7 @@ public class Server {
             threadDictionary.put(myThread, this);
         }
         public void removeUser(){
-            System.out.print(this.myThread.getUserName()+ "is removing");
+            System.out.print(this.myThread.getUserName()+ " is removing");
             //userNames.remove(this.userName);
             threadDictionary.remove(this.myThread);
             userThreads.remove(this.myThread);
