@@ -26,6 +26,7 @@ public class WriteThread  extends Thread{
         String text;
         do {
             text = console.readLine();//Bunu sildim userName+"> "
+            
             writer.println(text);
         } while (!text.equals("bye"));
         try {
