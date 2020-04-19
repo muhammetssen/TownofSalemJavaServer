@@ -62,9 +62,8 @@ public static void main(String[] args) {
 }
 public void broadcast(String message, UserThread excludeUser) {
     for (UserThread destThread : userThreads) {
-        if(destThread != excludeUser){
             destThread.sendMessage(message);
-        }
+        
     }
 }
 public boolean hasUsers(){
