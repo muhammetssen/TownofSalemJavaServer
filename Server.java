@@ -2,7 +2,7 @@
 import java.io.*;
 import java.net.*;
 import java.util.*;
-//import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 
 public class Server {
     Hashtable<UserThread, User> threadDictionary = new Hashtable<UserThread, User>();
@@ -16,11 +16,11 @@ public class Server {
             userThreads.add(myThread);
             threadDictionary.put(myThread, this);
         }
-        public void removeUser(){
+        public void removeUser() throws FileNotFoundException{
             System.out.print(this.myThread.getUserName()+ " is removing");
-            //PrintStream log = new PrintStream(new FileOutputStream("logs.txt",true));
-            //log.append((new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")).format(new Date()) + " "+ incomingSocket.getLocalAddress()  + " connected\n");
-            //log.close();
+            PrintStream log = new PrintStream(new FileOutputStream("logs.txt",true));
+            log.append((new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")).format(new Date()) + " "+ this.myThread.socket.getLocalAddress()  + " disconnected\n");
+            log.close();
 
             //userNames.remove(this.userName);
             threadDictionary.remove(this.myThread);
@@ -45,9 +45,9 @@ public class Server {
             while(true){
                 Socket incomingSocket = serverSocket.accept();
                 System.out.println("New user connected from "+incomingSocket.getLocalAddress());
-                //PrintStream log = new PrintStream(new FileOutputStream("logs.txt",true));
-                //log.append((new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")).format(new Date()) + " "+ incomingSocket.getLocalAddress()  + " connected\n");
-                //log.close();
+                PrintStream log = new PrintStream(new FileOutputStream("logs.txt",true));
+                log.append((new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")).format(new Date()) + " "+ incomingSocket.getLocalAddress()  + " connected\n");
+                log.close();
         
                 UserThread newUserThread = new UserThread(incomingSocket, this);
                 User newUser = new User(newUserThread);
