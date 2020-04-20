@@ -4,7 +4,7 @@ import java.net.*;
 import java.util.*;
  
 public class UserThread extends Thread {
-    private Socket socket;
+    public Socket socket;
     private Server server;
     private PrintWriter writer;
     private String userName; 
