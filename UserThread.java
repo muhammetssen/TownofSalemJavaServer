@@ -26,7 +26,7 @@ public class UserThread extends Thread {
 
             this.userName = reader.readLine();
             String serverMessage = "New user connected " + this.userName;
-            System.out.println("New user connected from "+this.socket.getInetAddress());
+            System.out.println("New user connected from "+this.socket.getInetAddress() + " userName:" +this.userName);
             PrintStream log = new PrintStream(new FileOutputStream("logs.txt",true));
             log.append((new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")).format(new Date()) + " "+ this.socket.getInetAddress()  +" username: "+this.userName   + " connected\n");
             log.close();
@@ -39,12 +39,13 @@ public class UserThread extends Thread {
                     continue;
                 serverMessage =  this.userName + "> " + clientMessage;
                 server.broadcast(serverMessage, this);
-            } while (!clientMessage.equalsIgnoreCase("Bye"));
+            } while (!clientMessage.equalsIgnoreCase("Bay Bay"));
             
             //User is leaving the server
             server.broadcast(this.userName +" has left.", this);
             server.threadDictionary.get(this).removeUser();
             reader.close();
+            writer.close();
             socket.close();
 
         }
