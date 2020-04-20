@@ -19,8 +19,9 @@ public class Server {
         public void removeUser() throws FileNotFoundException{
             System.out.print(this.myThread.getUserName()+ " is removing");
             PrintStream log = new PrintStream(new FileOutputStream("logs.txt",true));
-            log.append((new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")).format(new Date()) + " "+ this.myThread.socket.getLocalAddress()  + " disconnected\n");
+            log.append((new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")).format(new Date()) + " "+ this.myThread.socket.getInetAddress() +" username: "+this.myThread.getUserName()  + " disconnected\n");
             log.close();
+            
 
             //userNames.remove(this.userName);
             threadDictionary.remove(this.myThread);
@@ -44,10 +45,8 @@ public class Server {
             System.out.println("Server is starting on port " + port);
             while(true){
                 Socket incomingSocket = serverSocket.accept();
-                System.out.println("New user connected from "+incomingSocket.getLocalAddress());
-                PrintStream log = new PrintStream(new FileOutputStream("logs.txt",true));
-                log.append((new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")).format(new Date()) + " "+ incomingSocket.getLocalAddress()  + " connected\n");
-                log.close();
+                
+                
         
                 UserThread newUserThread = new UserThread(incomingSocket, this);
                 User newUser = new User(newUserThread);
