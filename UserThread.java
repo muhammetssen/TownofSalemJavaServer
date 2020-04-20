@@ -1,6 +1,7 @@
 
 import java.io.*;
 import java.net.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
  
 public class UserThread extends Thread {
@@ -25,6 +26,10 @@ public class UserThread extends Thread {
 
             this.userName = reader.readLine();
             String serverMessage = "New user connected " + this.userName;
+            System.out.println("New user connected from "+this.socket.getInetAddress());
+            PrintStream log = new PrintStream(new FileOutputStream("logs.txt",true));
+            log.append((new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")).format(new Date()) + " "+ this.socket.getInetAddress()  +" username: "+this.userName   + " connected\n");
+            log.close();
             server.broadcast(serverMessage, this);
             
             String clientMessage = "";
