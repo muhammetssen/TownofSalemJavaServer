@@ -36,7 +36,9 @@ public class Server {
     private Set<UserThread> userThreads = new HashSet<>();
     private Set<String> userNames = new HashSet<>();
 
-
+    public Set<UserThread> getUserThreads(){
+        return userThreads;
+    }
     public Server(int port){
         this.port = port;
     }
