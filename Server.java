@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 
 public class Server {
     private int port;
+    public Game game;
 
     public static Set<UserThread> userThreads = new HashSet<>();
     public static Hashtable<UserThread, User> threadDictionary = new Hashtable<UserThread, User>();    
@@ -25,7 +26,24 @@ public static void main(String[] args) {
     //If possible, create a ServerSocket object with given port
     try(ServerSocket serverSocket = new ServerSocket(server.port)){
         System.out.println("Server is starting on port " + server.port);
-
+        Socket hostSocket = serverSocket.accept();
+        UserThread hostThread = new UserThread(hostSocket,server);
+        hostThread.start();
+        User hostUser = new User(hostThread);
+        /*
+        synchronized(server){
+            while(!hostThread.ready){
+                try {
+                    server.wait();
+                //TODO: handle exception
+            }
+                         catch (Exception e) {
+                             System.out.println("sictik");
+                         }    
+            }
+        }*/
+            //Game game = new Game(hostUser);
+            
         while(true){
             Socket incomingSocket = serverSocket.accept(); //ClientSocket           
             UserThread newUserThread = new UserThread(incomingSocket, server);
@@ -54,7 +72,7 @@ public static void main(String[] args) {
 
 
 }
-public void broadcast(String message, UserThread excludeUser) {
+public  void broadcast(String message) {
     for (UserThread destThread : userThreads) 
             destThread.sendMessage(message);
 }

@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 public class User {
     public UserThread myThread;
     public String userName;
+    public PlayerType playerType;
     public User(UserThread myThread){
         this.myThread = myThread;
         Server.userThreads.add(myThread);
@@ -16,4 +17,5 @@ public class User {
         System.out.println("\t done");
         Server.logger(this.myThread.socket.getInetAddress() +" username: "+this.myThread.getUserName()  + " disconnected");
     }
+    
 }

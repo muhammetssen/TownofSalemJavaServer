@@ -1,9 +1,3 @@
-Client.class
-ReadThread.class
-WriteThread.class
-Server.class
-Server$User.class
-UserThread.class
 logs.txt
 runner.bat
-User.class
+*.class
