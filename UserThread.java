@@ -42,7 +42,7 @@ public class UserThread extends Thread {
             
             //User is leaving the server
             server.broadcast(this.userName +" has left.", this);
-            server.threadDictionary.get(this).removeUser();
+            Server.threadDictionary.get(this).removeUser();
             reader.close();
             writer.close();
             socket.close();
@@ -59,10 +59,5 @@ public class UserThread extends Thread {
     void sendMessage(String message){
         writer.println(message);
     }
-    void printUsers(){
-
-        if(server.hasUsers()){
-            writer.println("Connected users " + server.getUserNames());
-        }
-    }
+   
 }

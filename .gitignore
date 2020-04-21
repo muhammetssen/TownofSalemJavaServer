@@ -5,3 +5,5 @@ Server.class
 Server$User.class
 UserThread.class
 logs.txt
+runner.bat
+User.class
