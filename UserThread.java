@@ -22,7 +22,6 @@ public class UserThread extends Thread {
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             
             writer = new PrintWriter(socket.getOutputStream(), true);
-            //printUsers(); //Something like a greetings message from server
 
             this.userName = reader.readLine();
             String serverMessage = "New user connected " + this.userName;
