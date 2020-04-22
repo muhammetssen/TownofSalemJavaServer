@@ -16,6 +16,7 @@ public class Server {
     }
 
     
+    
 public static void main(String[] args) {
     if(args.length == 0){
         System.out.println("Please give a Port Number as argument. Syntax java Server <port>");
@@ -29,26 +30,16 @@ public static void main(String[] args) {
         Socket hostSocket = serverSocket.accept();
         UserThread hostThread = new UserThread(hostSocket,server);
         hostThread.start();
-        User hostUser = new User(hostThread);
-        /*
-        synchronized(server){
-            while(!hostThread.ready){
-                try {
-                    server.wait();
-                //TODO: handle exception
-            }
-                         catch (Exception e) {
-                             System.out.println("sictik");
-                         }    
-            }
-        }*/
-            //Game game = new Game(hostUser);
+        Host hostUser = new Host(hostThread);
+        hostThread.user = hostUser;
             
         while(true){
             Socket incomingSocket = serverSocket.accept(); //ClientSocket           
             UserThread newUserThread = new UserThread(incomingSocket, server);
+            newUserThread.start();
             User newUser = new User(newUserThread);
-            newUser.myThread.start();
+            newUserThread.user = newUser;
+
         }
     }
     catch(IOException ex){
