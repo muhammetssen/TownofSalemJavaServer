@@ -24,18 +24,8 @@ public class Game {
                     String input  ;
                     if((input = gameHost.myThread.readFromUser()) == null){
                         this.server.broadcast("HOST HAS LEFT THE GAME!!");
-                        gameHost.removeUser();
-                        if(Server.userThreads.size() != 0){
-                            gameHost = Server.threadDictionary.keys().nextElement().user;
-                            gameHost.myThread.sendMessage("You are the New Host");
-                            gameHost.myThread.sendMessage("How many " + type+"s do you want?" );
-                            continue;
-                        }
-                        else{
-                            System.out.println("NO ONE LEFT. CLOSING THE GAME!");
-                            System.exit(0);
-                            break;
-                        }
+                        System.exit(0);
+                        /**TODO A random player will be chosen as host, look after hav'ng a host GUI */
                     }
                         
                     count = Integer.parseInt(input);

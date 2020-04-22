@@ -56,7 +56,7 @@ public class UserThread extends Thread {
                 String clientMessage = "";
             
             do {
-                clientMessage = this.reader.readLine();
+                clientMessage = this.readFromUser();
                 if(clientMessage.equals(""))
                     continue;
                 if(clientMessage.charAt(0) == '!'){

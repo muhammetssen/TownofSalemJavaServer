@@ -8,7 +8,7 @@ public class Server {
     private int port;
     public Game game;
 
-    public static Set<UserThread> userThreads = new HashSet<>();
+    public static ArrayList<UserThread> userThreads = new ArrayList<UserThread>();
     public static Hashtable<UserThread, User> threadDictionary = new Hashtable<UserThread, User>();    
     
     public Server(int port){
