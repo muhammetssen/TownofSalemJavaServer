@@ -11,11 +11,23 @@ public class UserThread extends Thread {
     private String userName; 
     public BufferedReader reader;
     public boolean ready =false;
+    public User user;
     
 
     public UserThread(Socket socket, Server server){
         this.socket = socket;
         this.server = server;
+
+    }
+    public String readFromUser(){
+        try {
+            String message = this.reader.readLine();       
+            return message;     
+        } catch (Exception e) {
+            System.out.println("User cannot be reached.");
+            return null;
+        }
+        
     }
 
     public void run() {
@@ -36,8 +48,11 @@ public class UserThread extends Thread {
                 this.ready = true;
                 this.server.notifyAll();
             }*/
-            if(this.server.game == null)
+            if(this.server.game == null && this.user instanceof Host )
                 this.server.game = new Game(Server.threadDictionary.get(this),this.server); 
+            else
+                sendMessage("Waiting for the Host to start to game.");
+
                 String clientMessage = "";
             
             do {
