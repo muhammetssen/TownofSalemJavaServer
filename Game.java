@@ -22,7 +22,7 @@ public class Game {
                 
                 try {
                     String input  ;
-                    if((input = gameHost.myThread.readFromUser()) == null){
+                    if((input = gameHost.myThread.readFromUser()) == ""){
                         this.server.broadcast("HOST HAS LEFT THE GAME!!");
                         System.exit(0);
                         /**TODO A random player will be chosen as host, look after hav'ng a host GUI */
