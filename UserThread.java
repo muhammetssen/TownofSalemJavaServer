@@ -25,18 +25,40 @@ public class UserThread extends Thread {
             return message;     
         } catch (Exception e) {
             System.out.println("User cannot be reached.");
-            return null;
+            return "";
         }
         
+    }
+    public static String capitalize(String name){
+        name = name.replaceAll(" ", "");
+        if(name.length() >1)
+            return name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+        else if (name.length() == 1)
+            return name.toUpperCase();
+        return "";
     }
 
     public void run() {
         try{
             InputStream input = socket.getInputStream();
             this.reader = new BufferedReader(new InputStreamReader(input));
-            
             this.writer = new PrintWriter(socket.getOutputStream(), true);
-            this.userName = this.reader.readLine();
+			this.sendMessage("Please enter an username");
+			do {
+                String userName = capitalize(this.readFromUser());
+
+                
+				if(Server.userNames.contains(userName)||"".equals(userName) || " ".equals(userName)){
+                    this.sendMessage("Please enter a valid username");
+                    continue;
+                }
+                this.userName=userName;
+                Server.userNames.add(userName);
+			
+				
+			}while(this.userName==null);
+            
+            //this.userName = this.reader.readLine();
             String serverMessage = "New user connected " + this.userName;
             System.out.println("New user connected from "+this.socket.getInetAddress() + " userName:" +this.userName);
             PrintStream log = new PrintStream(new FileOutputStream("logs.txt",true));
