@@ -1,8 +1,10 @@
-
+package Main;
 import java.io.*;
 import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import User.*;
+import GameEngine.*;
  
 public class UserThread extends Thread {
     public Socket socket;
@@ -106,7 +108,7 @@ public class UserThread extends Thread {
     public String getUserName(){
         return this.userName;
     }
-    void sendMessage(String message){
+    public void sendMessage(String message){
         this.writer.println(message);
     }
 

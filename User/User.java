@@ -1,5 +1,7 @@
+package User;
 import java.io.FileNotFoundException;
-
+import Main.*;
+import PlayerTypes.*;
 public class User {
     public UserThread myThread;
     public String userName;

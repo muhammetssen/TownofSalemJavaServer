@@ -1,7 +1,8 @@
+package GameEngine;
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.*;
-
+import User.*;
+import Main.*;
 public class Game {
     public static boolean isDay = true;
     public ArrayList<User> users = new ArrayList<User>();

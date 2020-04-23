@@ -1,6 +1,8 @@
+package User;
+import Main.*;
 
 public class Host  extends User{
-    Host(UserThread myThread){
+    public Host(UserThread myThread){
         super(myThread);
     }
 
