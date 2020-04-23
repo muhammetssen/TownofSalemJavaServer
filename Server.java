@@ -10,7 +10,7 @@ public class Server {
 
     public static ArrayList<UserThread> userThreads = new ArrayList<UserThread>();
     public static Hashtable<UserThread, User> threadDictionary = new Hashtable<UserThread, User>();    
-    
+    public static ArrayList<String> userNames = new ArrayList<String>(); 
     public Server(int port){
         this.port = port;
     }
