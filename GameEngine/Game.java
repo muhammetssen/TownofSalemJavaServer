@@ -76,7 +76,7 @@ public class Game {
                 String message = "PM "+ sender.userName +"> "+  reader.nextLine(); 
                 System.out.println(message);
                 if(!Server.userNameDictionary.keySet().contains(destUser)) return;
-                sender.myThread.sendMessage("PM "+ sender.userName +"> "+message);
+                sender.myThread.sendMessage(message);
                 Server.userNameDictionary.get(destUser).myThread.sendMessage(message);
                 break; 
             default:
