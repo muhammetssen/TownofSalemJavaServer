@@ -48,61 +48,60 @@ public class UserThread extends Thread {
 			this.sendMessage("Please enter an username");
 			do {
                 String userName = capitalize(this.readFromUser());
-
-                
 				if(Server.userNames.contains(userName)||"".equals(userName) || " ".equals(userName)){
                     this.sendMessage("Please enter a valid username");
                     continue;
                 }
                 this.userName=userName;
+                this.user.userName = this.userName;
                 Server.userNames.add(userName);
-			
-				
+                Server.userNameDictionary.put(userName, this.user);
 			}while(this.userName==null);
             
-            //this.userName = this.reader.readLine();
+            System.out.println("New user connected from "+this.socket.getInetAddress() + " userName: " +this.userName);
+            Server.logger(this.socket.getInetAddress()  +" username: "+this.userName   + " connected\n");
             String serverMessage = "New user connected " + this.userName;
-            System.out.println("New user connected from "+this.socket.getInetAddress() + " userName:" +this.userName);
-            PrintStream log = new PrintStream(new FileOutputStream("logs.txt",true));
-            log.append((new SimpleDateFormat("dd-MM-yyyy HH:mm:ss")).format(new Date()) + " "+ this.socket.getInetAddress()  +" username: "+this.userName   + " connected\n");
-            log.close();
-
             server.broadcast(serverMessage);
-            /*synchronized(this.server){
-                this.ready = true;
-                this.server.notifyAll();
-            }*/
+         
             if(this.server.game == null && this.user instanceof Host )
                 this.server.game = new Game(Server.threadDictionary.get(this),this.server); 
             else
                 sendMessage("Waiting for the Host to start to game.");
 
                 String clientMessage = "";
-            
+                int tries = 0;
             do {
                 clientMessage = this.readFromUser();
-                if(clientMessage.equals(""))
+                if(clientMessage.equals(""))     {
+                    System.out.println(this.userName + " cannot be connected. Try:" + ++tries +"/"+3);
+                    Thread.sleep(2000);
+                    if(tries >= 3) break; //  Bay Bay User.
                     continue;
-                if(clientMessage.charAt(0) == '!'){
-                    server.game.analyze(clientMessage);
                 }
+                if(clientMessage.charAt(0) == '!')
+                    server.game.analyze(this.user,clientMessage);
                 else{
                 serverMessage =  this.userName + "> " + clientMessage;
                 server.broadcast(serverMessage);
                 }
-            } while (!clientMessage.equalsIgnoreCase("Bay Bay"));
+            } while (!clientMessage.equalsIgnoreCase("Bay Bay") );
             
             //User is leaving the server
             server.broadcast(this.userName +" has left." );
-            Server.threadDictionary.get(this).removeUser();
+            this.user.removeUser();
             reader.close();
             writer.close();
             socket.close();
+            this.interrupt();
+            
 
         }
         catch(IOException ex){
             System.out.println("UserThread Error"+ ex.getMessage());
             ex.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
     public String getUserName(){
