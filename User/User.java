@@ -6,9 +6,11 @@ public class User {
     public UserThread myThread;
     public String userName;
     public PlayerType playerType;
+    public boolean isReady;
     
     public User(UserThread myThread){
         this.myThread = myThread;
+        this.isReady = false;
         Server.userThreads.add(myThread);
         Server.threadDictionary.put(myThread, this);
         
@@ -17,6 +19,7 @@ public class User {
     public void removeUser() throws FileNotFoundException {
         System.out.print(this.userName+ " is removing... ");
         Server.userNames.remove(this.userName);
+        Server.userNameDictionary.remove(this.userName);
         Server.threadDictionary.remove(this.myThread);
         Server.userThreads.remove(this.myThread);
         System.out.println("\t done");
