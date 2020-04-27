@@ -1,7 +1,10 @@
 package PlayerTypes;
 public class Vampire extends BadPlayer {
-    Vampire(){
+    public Vampire(){
         System.out.println("Vampire created");
     }
-
+    @Override
+    public String toString() {
+        return "Vampire";    
+    }
 }
