@@ -5,6 +5,8 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 import GameEngine.*;
 import User.*;
+import PlayerTypes.Vampire;
+import PlayerTypes.Villager;
 
 
 public class Server {
@@ -19,15 +21,10 @@ public class Server {
     
     public boolean isEveryoneReady = false;
     public Server(int port){
-        this.port = port;
-
-
+        this.port = port;    
+    }  
     
-    }
-
-    
-    
-public static void main(String[] args) {
+public static void main(String[] args) throws Exception{
     if(args.length == 0){
         System.out.println("Please give a Port Number as argument. Syntax java Server <port>");
         System.exit(0);
@@ -57,26 +54,13 @@ public static void main(String[] args) {
         }
         System.out.println("Everyone is ready!!");
         server.broadcast("Everyone is ready! The game is starting");
+        server.game.distributeTypes();
 
     }
     catch(IOException ex){
         System.out.println("Server Error" + ex);
         ex.printStackTrace();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

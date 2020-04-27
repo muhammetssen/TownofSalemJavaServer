@@ -1,8 +1,7 @@
 package Main;
 import java.io.*;
 import java.net.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
+
 import User.*;
 import GameEngine.*;
  
@@ -10,7 +9,7 @@ public class UserThread extends Thread {
     public Socket socket;
     public Server server;
     public PrintWriter writer;
-    private String userName; 
+    public String userName; 
     public BufferedReader reader;
     public boolean ready =false;
     public User user;
@@ -53,13 +52,14 @@ public class UserThread extends Thread {
                     continue;
                 }
                 this.userName=userName;
+                this.user.userName = userName;
                 this.user.userName = this.userName;
                 Server.userNames.add(userName);
                 Server.userNameDictionary.put(userName, this.user);
 			}while(this.userName==null);
             
             System.out.println("New user connected from "+this.socket.getInetAddress() + " userName: " +this.userName);
-            Server.logger(this.socket.getInetAddress()  +" username: "+this.userName   + " connected\n");
+            Server.logger(this.socket.getInetAddress()  +" username: "+this.userName   + " connected");
             String serverMessage = "New user connected " + this.userName;
             server.broadcast(serverMessage);
          
@@ -100,7 +100,6 @@ public class UserThread extends Thread {
             System.out.println("UserThread Error"+ ex.getMessage());
             ex.printStackTrace();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
